@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+/*
+  Paleta pensada para uso al aire libre / a plena luz:
+  fondo claro tipo "papel de laboratorio" en vez de pantalla oscura,
+  tinta oscura de alto contraste, y dos acentos (verde pino y ciruela)
+  en vez del naranja/cian original. Sin brillos ni efectos CRT que
+  se pierden con luz solar directa: todo se apoya en contraste real.
+*/
+:root{
+  --bg:        #f4efe2;   /* papel cálido */
+  --panel:     #fffdf8;   /* tarjeta casi blanca */
+  --panel-2:   #eadfc4;   /* franja más oscura para cabeceras/registros */
+  --ink:       #23291f;   /* texto principal, casi negro */
+  --ink-dim:   #6b6a55;   /* texto secundario/atenuado */
+  --pine:      #1f6b4a;   /* acento principal (antes ámbar) */
+  --pine-dark: #144a33;
+  --plum:      #7a3f7d;   /* acento secundario (antes cian) */
+  --rust:      #b23b2e;   /* error/alerta */
+  --line:      #d8cca3;   /* bordes suaves */
+  --shadow:    rgba(35,41,31,0.16);
+
+  --f-display: 'VT323', monospace;
+  --f-body:    'IBM Plex Mono', monospace;
+}
+
+*{ box-sizing: border-box; }
+
+html,body{
+  margin:0; padding:0; min-height:100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+}
+
+body{
+  display:flex; align-items:center; justify-content:center;
+  padding: 40px 18px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* ---------- terminal window chrome ---------- */
+.terminal{
+  width:100%; max-width: 840px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 24px 50px var(--shadow), 0 2px 0 var(--line);
+  overflow:hidden;
+}
+
+.titlebar{
+  display:flex; align-items:center; gap:10px;
+  padding: 14px 20px;
+  background: var(--panel-2);
+  border-bottom: 2px solid var(--line);
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+}
+.titlebar .dot{ width:13px; height:13px; border-radius:50%; background: var(--line); }
+.titlebar .dot.a{ background:#b25a4c; }
+.titlebar .dot.b{ background:#c79a3f; }
+.titlebar .dot.c{ background: var(--pine); }
+.titlebar .path{ margin-left:auto; opacity:.85; }
+
+.screen{
+  padding: 36px 38px 42px;
+}
+
+/* progress: this IS a real sequence of 3 protocols, numbering carries meaning */
+.progress{
+  display:flex; gap:8px; margin-bottom: 24px;
+  font-family: var(--f-body); font-weight:600; font-size: 14px; letter-spacing:.08em;
+}
+.progress .step{
+  flex:1; text-align:center; padding:10px 6px;
+  border:2px solid var(--line); border-radius:6px;
+  color: var(--ink-dim); background: var(--panel);
+}
+.progress .step.done{ color: #fff; background: var(--pine); border-color: var(--pine); }
+.progress .step.current{ color: var(--pine-dark); border-color: var(--pine); background: #e7f2ec; }
+
+h1.display{
+  font-family: var(--f-display);
+  font-size: 68px;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--pine-dark);
+  margin: 0 0 8px;
+}
+.eyebrow{
+  font-size: 15px; letter-spacing:.22em; text-transform:uppercase;
+  font-weight:600;
+  color: var(--plum); margin: 0 0 12px;
+}
+
+.boot-log{
+  font-size: 20px; line-height: 1.85;
+  min-height: 230px;
+  white-space: pre-wrap;
+  color: var(--ink);
+  font-weight: 500;
+}
+.boot-log .muted{ color: var(--ink-dim); }
+.cursor{
+  display:inline-block; width:12px; height:22px;
+  background: var(--pine);
+  vertical-align: text-bottom;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+p{ line-height:1.75; font-size:18px; font-weight:500; }
+
+.btn{
+  font-family: var(--f-body);
+  font-weight:700;
+  font-size: 16px;
+  letter-spacing:.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--pine);
+  border: none;
+  border-radius: 8px;
+  padding: 18px 28px;
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  box-shadow: 0 6px 0 var(--pine-dark);
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 8px 0 var(--pine-dark); }
+.btn:active{ transform: translateY(2px); box-shadow: 0 3px 0 var(--pine-dark); }
+.btn:disabled{ opacity:.45; cursor:not-allowed; box-shadow:none; }
+.btn:focus-visible, a:focus-visible, input:focus-visible{
+  outline: 3px solid var(--plum); outline-offset: 3px;
+}
+.btn.ghost{
+  background: var(--panel); color: var(--pine-dark);
+  border: 2px solid var(--pine);
+  box-shadow:none;
+}
+.btn.ghost:hover{ background:#e7f2ec; transform:none; }
+
+.actions{ display:flex; gap:14px; margin-top: 30px; flex-wrap:wrap; }
+
+/* ---------- game 1: registers ---------- */
+.registers{
+  display:grid; grid-template-columns: repeat(4,1fr); gap:16px;
+  margin: 28px 0 10px;
+}
+@media (max-width: 640px){ .registers{ grid-template-columns: repeat(2,1fr);} }
+
+.register{
+  background: var(--panel-2);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 14px 18px;
+  text-align:center;
+}
+.register .label{
+  font-size: 13px; font-weight:700; letter-spacing:.12em; color: var(--ink-dim); margin-bottom:10px;
+}
+.register .bits{
+  font-family: var(--f-display);
+  font-size: 38px;
+  letter-spacing: 4px;
+  color: var(--pine-dark);
+  margin-bottom: 12px;
+}
+.register input{
+  width: 100%;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  color: var(--plum);
+  font-family: var(--f-display);
+  font-size: 32px;
+  text-align:center;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 10px 0;
+}
+.register input:focus{ border-color: var(--plum); }
+.register.ok{ border-color: var(--pine); background:#e7f2ec; }
+.register.bad{ border-color: var(--rust); animation: shake .3s; }
+@keyframes shake{
+  0%,100%{ transform: translateX(0); }
+  25%{ transform: translateX(-5px); }
+  75%{ transform: translateX(5px); }
+}
+
+.feedback{
+  min-height: 30px;
+  font-size: 17px; font-weight:600; letter-spacing:.02em;
+  margin-top: 16px;
+}
+.feedback.ok{ color: var(--pine-dark); }
+.feedback.bad{ color: var(--rust); }
+
+.hint-panel{
+  margin-top:18px;
+  border: 2px dashed var(--line);
+  border-radius:10px;
+  padding: 16px 18px;
+  font-size: 16px;
+  color: var(--ink-dim);
+  display:none;
+}
+.hint-panel.open{ display:block; }
+.ascii-grid{
+  display:grid; grid-template-columns: repeat(6,1fr);
+  gap: 6px 12px; margin-top:10px;
+  font-family: var(--f-body); font-weight:600; font-size: 15px;
+  color: var(--ink);
+}
+@media (max-width: 640px){ .ascii-grid{ grid-template-columns: repeat(3,1fr);} }
+
+.code-reveal{
+  margin-top: 24px;
+  text-align:center;
+  font-family: var(--f-display);
+  font-size: 64px;
+  letter-spacing: 12px;
+  color: var(--plum);
+  display:none;
+}
+.code-reveal.show{ display:block; }
+
+footer.note{
+  margin-top: 22px;
+  font-size: 14px;
+  font-weight:500;
+  color: var(--ink-dim);
+  border-top: 2px solid var(--line);
+  padding-top: 14px;
+}
+footer.note code{
+  background: var(--panel-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cursor{ animation:none; opacity:1; }
+  .register.bad{ animation:none; }
+}
