@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÚCLEO_OS — Protocolo 3</title>
+  <link rel="stylesheet" href="../statics/css/style.css">
+  <style>
+    /* Estilo Consola Bash */
+    .bash-window {
+      background-color: #300a24;
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      border-radius: 6px;
+      border: 1px solid #5e2750;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .bash-header {
+      background: #3c3b37;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #dfdbd2;
+    }
+
+    .bash-title {
+      font-weight: bold;
+    }
+
+    .bash-body {
+      padding: 15px;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .prompt {
+      color: #8ae234;
+      font-weight: bold;
+    }
+    .prompt-path {
+      color: #729fcf;
+      font-weight: bold;
+    }
+
+    .code-highlight {
+      background: #4e9a06;
+      color: #ffffff;
+      padding: 2px 6px;
+      font-weight: bold;
+      border-radius: 2px;
+    }
+
+    .bash-input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 15px;
+      background: rgba(0,0,0,0.2);
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .code-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      text-transform: uppercase;
+      flex-grow: 1;
+      outline: none;
+    }
+
+    .code-input::placeholder {
+      color: #75507b;
+    }
+
+    .btn-bash {
+      background: #4e9a06;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .btn-bash:hover {
+      background: #5cbf0d;
+    }
+
+    .status-bar {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #fce94f;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    .feedback.error { color: #ef2929; }
+    .feedback.success { color: #8ae234; }
+
+    .lock-overlay {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: #2e0000;
+      border: 1px solid #cc0000;
+      color: #ef2929;
+      margin-top: 15px;
+      border-radius: 4px;
+    }
+
+    .btn-reset {
+      background: #cc0000;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+      border-radius: 3px;
+    }
+    .btn-reset:hover {
+      background: #ff0000;
+    }
+  </style>
+</head>
+<body>
+
+<div class="terminal" id="terminal-container">
+  <div class="titlebar">
+    <span class="dot a"></span><span class="dot b"></span><span class="dot c"></span>
+    <span>NUCLEO_OS v1.02</span>
+    <span class="path">/lab/protocolo_3</span>
+  </div>
+
+  <div class="screen">
+    <div class="progress">
+      <div class="step done">Protocolo 1</div>
+      <div class="step done">Protocolo 2</div>
+      <div class="step current">Protocolo 3</div>
+    </div>
+
+    <p class="eyebrow">Módulo de seguridad</p>
+    <h1 class="display">DESENCRIPTA LA PALABRA</h1>
+
+    <div class="bash-window">
+      <div class="bash-header">
+        <span class="bash-title">agent_zero@cyber-lab-x515ea: ~/ciberseguridad/mecanica/cesar</span>
+      </div>
+      
+      <div class="bash-body">
+        <p><span class="prompt">agent_zero@cyber-lab-x515ea</span>:<span class="prompt-path">~/ciberseguridad/mecanica/cesar</span>$ cat instrucciones.txt</p>
+        
+        <p><strong>Círculo Exterior:</strong> Contiene el alfabeto real (el mensaje que podemos leer).</p>
+        <p><strong>Círculo Interior:</strong> Contiene el alfabeto cifrado (el código secreto).</p>
+        <br>
+        <p>Antes de empezar, debemos configurar la máquina con la clave interceptada. En el manual nos dicen que se está usando un salto de 13 posiciones. Gira el círculo interior con cuidado hasta que la letra A del círculo exterior quede perfectamente alineada con la letra de posición 13.</p>
+
+        <br>
+        <p><strong>Codigo interceptado:</strong> <span class="code-highlight" id="codigo-interceptado">CARGANDO...</span></p>
+
+        <form id="cipher-form" onsubmit="validarCodigo(event)" style="margin-top: 15px;">
+          <label for="respuesta"><span class="prompt">agent_zero@cyber-lab-x515ea</span>:<span class="prompt-path">~/ciberseguridad/mecanica/cesar</span>$ ./desencriptar.sh --input</label>
+          <div class="bash-input-line">
+            <span>&gt;</span>
+            <input 
+              type="text" 
+              id="respuesta" 
+              class="code-input" 
+              placeholder="ESCRIBE_LA_RESPUESTA_AQUI" 
+              autocomplete="off" 
+              required
+            >
+            <button type="submit" id="btn-submit" class="btn-bash">EJECUTAR</button>
+          </div>
+        </form>
+
+        <div class="status-bar">
+          <span id="attempts-text">[SEGURIDAD] Intentos de autenticación restantes: 3/3</span>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div id="lock-overlay" class="lock-overlay">
+          <p><strong>[FATAL ERROR] SISTEMA BLOQUEADO POR INTRUSIÓN</strong></p>
+          <p>Se ha superado el límite de 3 intentos fallidos. Cerrando sesión de usuario...</p>
+          <button class="btn-reset" onclick="reiniciarTodoElSistema()">REINICIAR EL SISTEMA</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="note" style="margin-top: 15px;">
+      Sala 3 de 3 · La seguridad es un proceso, no un producto.
+    </footer>
+  </div>
+</div>
+
+<script src="../dynamics/js/juego3.js"></script>
+</body>
+</html>

@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NÚCLEO_OS — Protocolo 1</title>
-<link rel="stylesheet" href="../statics/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÚCLEO_OS — Protocolo 1</title>
+  <link rel="stylesheet" href="../statics/css/style.css">
 </head>
 <body>
  
@@ -18,7 +17,7 @@
  
   <div class="screen">
     <div class="progress">
-      <div class="step current">Protocolo 1</div> <!--Actual-->
+      <div class="step current">Protocolo 1</div>
       <div class="step">Protocolo 2</div>
       <div class="step">Protocolo 3</div>
     </div>
@@ -27,21 +26,21 @@
     <h1 class="display">TRADUCTOR BINARIO</h1>
     <p>
       El sistema recibió un mensaje de 4 letras codificado en binario, un byte por letra.
-      Convierte cada registro a su valor decimal y luego conviertelo a la letra ASCII correspondiente.
+      Convierte cada registro a su valor decimal y luego conviértelo a la letra ASCII correspondiente.
     </p>
  
     <div class="registers" id="registers">
       <!-- generados por JS -->
     </div>
  
-    <div class="feedback" id="feedback"></div> <!--donde te dice si si o si nada-->
+    <div class="feedback" id="feedback"></div>
  
     <div class="code-reveal" id="codeReveal"></div>
  
     <div class="actions">
       <button class="btn ghost" id="hintBtn" type="button">Mostrar tabla ASCII</button>
       <button class="btn" id="verifyBtn" type="button">Verificar</button>
-      <button class="btn" id="continueBtn" type="button" style="display:none;" onclick="location.href='./juego2.html'">Continuar al Protocolo 2</button>
+      <button class="btn" id="continueBtn" type="button" style="display:none;" onclick="location.href='juego2.html'">Continuar al Protocolo 2</button>
     </div>
  
     <div class="hint-panel" id="hintPanel">
@@ -49,7 +48,7 @@
       Suma los valores donde haya un 1 para obtener el número decimal.
       <div class="ascii-grid" id="asciiGrid"></div>
     </div>
- 
+
     <footer class="note">Sala 1 de 3 · Al completar el registro, obtendrás el primer fragmento del código maestro.</footer>
   </div>
 </div>
@@ -57,4 +56,3 @@
 <script src="../dynamics/js/juego1.js"></script>
 </body>
 </html>
- 
